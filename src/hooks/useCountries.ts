@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import type { Country } from '../types/country';
-import { RestCountriesAPI } from '../services/restCountriesApi';
+import { RestCountriesAPI } from '../services/api';
 
 const api = new RestCountriesAPI();
 

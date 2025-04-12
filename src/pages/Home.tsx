@@ -54,11 +54,8 @@ const Home: React.FC = () => {
       <div className="container mx-auto px-4">
         <div className="mb-12 text-center">
           <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Explore the World
+          Visualizing Country Information
           </h1>
-          <p className="text-gray-600 max-w-2xl mx-auto">
-            Discover information about countries around the globe. Click on any flag to learn more about its history, culture, and demographics.
-          </p>
         </div>
 
         <div className="mb-8 flex flex-col gap-4 sm:flex-row max-w-3xl mx-auto">
