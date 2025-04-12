@@ -9,12 +9,21 @@ const Home: React.FC = () => {
   const [region, setRegion] = useState('');
 
   const filteredCountries = useMemo(() => {
-    return countries.filter((country) => {
-      const matchesSearch = country.name.toLowerCase().includes(search.toLowerCase());
-      const matchesRegion = region === '' || country.region === region;
-      return matchesSearch && matchesRegion;
-    });
+    const seen = new Set();
+    return countries
+      .filter((country) => {
+        const matchesSearch = country.name.toLowerCase().includes(search.toLowerCase());
+        const matchesRegion = region === '' || country.region === region;
+        return matchesSearch && matchesRegion;
+      })
+      .filter((country) => {
+        const key = country.name.toLowerCase(); // normalize for consistency
+        if (seen.has(key)) return false;
+        seen.add(key);
+        return true;
+      });
   }, [countries, search, region]);
+  
 
   const regions = useMemo(() => {
     return Array.from(new Set(countries.map((country) => country.region))).sort();

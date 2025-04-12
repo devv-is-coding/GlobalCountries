@@ -14,10 +14,22 @@ export function useCountries() {
       try {
         setLoading(true);
         const data = await api.getAllCountries();
+
         if (!data.length) {
           throw new Error('No countries data received');
         }
-        setCountries(data);
+
+        // Deduplicate by country name (case-insensitive)
+        const uniqueCountries = Array.from(
+          new Map(data.map((country) => [country.name.toLowerCase(), country])).values()
+        );
+
+        // Optional: Sort alphabetically by country name
+        const sortedUniqueCountries = uniqueCountries.sort((a, b) =>
+          a.name.localeCompare(b.name)
+        );
+
+        setCountries(sortedUniqueCountries);
         setError(null);
       } catch (err) {
         const errorMessage = err instanceof Error ? err.message : 'Failed to fetch countries';

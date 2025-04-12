@@ -10,9 +10,13 @@ export function useCountry(code: string) {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    if (!code) {
+      setError('No country code provided');
+      setLoading(false);
+      return;
+    }
+
     const fetchCountry = async () => {
-      if (!code) return;
-      
       try {
         setLoading(true);
         const data = await api.getCountryByCode(code);
@@ -27,6 +31,12 @@ export function useCountry(code: string) {
     };
 
     fetchCountry();
+  }, [code]);
+
+  // Optional: Reset state when code changes
+  useEffect(() => {
+    setCountry(null); // Reset to prevent stale data flash
+    setError(null);
   }, [code]);
 
   return { country, loading, error };
